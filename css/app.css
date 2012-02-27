@@ -1,0 +1,36 @@
+/*wrapper*/
+.wrapper{width:1000px; margin: 0px auto;}
+
+/*header*/
+.header{height:30px;}
+.header h1{float:left;}
+.header .user-info{float:right; padding-top: 8px;}
+
+/*main body*/
+.main .navigation{float:right; height:26px; }
+.main .navigation li{float:left; height:20px; padding:4px 8px 0; margin:1px 8px 0 0; border: 1px #000 solid; border-bottom: 0px;}
+.main .navigation li.last{ margin-right: 0px;}
+.main .navigation li.current{ margin-top: 0px; height:21px; position:relative; z-index:1; bottom: -1px; background: #ccc;}
+.main .main-body{clear:both;border: 1px #000 solid;}
+.main .sub-title{height:40px; border-bottom: 1px #000 solid; background: #ccc;}
+.main .sub-title h3{float:left; line-height: 40px; margin-left: 8px;}
+.main .sub-title ul{float:left; margin-left: 12px;}
+.main .sub-title ul li{float:left; margin:8px 10px 0 0; border: 1px #000 solid; padding: 4px 8px;}
+
+/*agents list*/
+.main .agents-list{width:779px;  float:left; padding: 10px; border-right:1px #000 solid;}
+.main .agents-list > li { border: 1px #000 solid; padding: 10px 10px 6px; margin-bottom: 10px;}
+.main .agents-list > li.last{margin-bottom: 0px;}
+.main .agents-list .add {float:left; display: inline-block; padding: 4px 0 2px;}
+
+/*resource*/
+.main .resource{float:left; margin: 1px 0 0 10px;}
+.main .resource > li {display: inline-block; margin:4px 8px 0 4px;}
+.main .resource b{ border: 1px #000 solid; display: inline-block; padding: 0px 2px; margin:-1px 5px 0 0; cursor: pointer;}
+
+/*summary*/
+.main .summary{width:188px;float:right; padding: 5px;}
+.main .summary h2{border-bottom: 1px #000 solid; padding-bottom: 4px; margin-bottom: 4px;}
+
+/*add resource*/
+.add-resource{border: 1px #000 solid; padding: 10px; background: #fff; position: absolute; display: none;}

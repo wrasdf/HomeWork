@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HomeWork For TW</title>
+    <link href="css/common.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="css/app.css" media="screen" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="header">
+        <div class="user-info">
+            Signed in as <b>Master</b><a href="#">Logout</a>
+        </div>
+    </div>
+    <div class="main">
+        <ul class="navigation">
+            <li>Dashboard</li>
+            <li class="current">My Cruise</li>
+            <li>Agents</li>
+            <li class="last">Help</li>
+        </ul>
+        <div class="main-body clearfix">
+            <div class="sub-title">
+                <h3>Agent</h3>
+                <ul>
+                    <li>All</li>
+                    <li>Physical</li>
+                    <li>Virtual</li>
+                </ul>
+            </div>
+            <div class="summary">
+                <h2>summary</h2>
+                <dl>
+                    <dt>Building :</dt>
+                    <dd id="buildingNum">5</dd>
+                </dl>
+                <dl>
+                    <dt>Idle :</dt>
+                    <dd id="idleNum">8</dd>
+                </dl>
+                <h2>Logs</h2>
+                <ul class="logs">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <ul class="agents-list"></ul>
+        </div>
+    </div>
+    <div class="footer"></div>
+    <div class="add-resource">
+        <input type="text" value="" id="resourceValue" />
+        <input type="button" value="save" id="saveBtn" />
+        <input type="button" value="cancel" id="cancelBtn" />
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>

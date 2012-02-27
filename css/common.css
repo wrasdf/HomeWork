@@ -1,0 +1,37 @@
+/*reset html tags*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { margin:0;padding:0;}table {border-collapse:collapse;border-spacing:0;}fieldset{ border:0;}img,button {background:none;border:0 none;vertical-align:middle;}address,caption,cite,code,dfn,em,strong,th,var {font-style:normal;font-weight:normal;}ol,ul,li {list-style:none;}caption,th {text-align:left;}h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal;}q:before,q:after {content:'';}abbr,acronym { border:0;}
+/*HTML5 tags*/
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {display:block;}
+
+/*pwc common css*/
+html {height:100%;font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color:#404041;background-color: #fff; font-family: Arial, "Times New Roman";}
+body{height:100%;font-size:12px;}
+h1, h2, h3, h4, h5, h6 {font-family: Georgia,"Times New Roman";font-weight: bold;}
+h1 {font-size: 23px;font-style: italic;}
+h2 {font-size: 21px;}
+h3 {font-size: 18px;}
+h4 {font-size: 14px;}
+h5 {font-size: 12px;}
+h6 {font-size: 11px;}
+
+input{color:#404041; font-size:12px;};
+input[type="button"]{overflow: visible;}
+input[type="text"]{padding:2px 4px; margin: 0px; height:22px; line-height: 19px; border:1px #aaa solid;width:90%}
+
+form label {font-style: italic;cursor:default;}
+
+a {color:#404041;outline-style: none;}
+a:hover {color:#EB8C00;}
+
+.clear{clear:both;font-size:0;line-height:0;visibility:hidden;height:0px;}
+.clearfix:before,
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+.clearfix:after {clear: both;}
+.clearfix {zoom: 1;} /* IE < 8 */
+.clearfix {display: inline-block;}
+* html .clearfix {height: 1%;}
