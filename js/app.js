@@ -3,18 +3,21 @@ function ResourceDialog() {
     this.resources = $('#resourceValue');
     this.saveBtn = $('#saveBtn');
     this.cancelBtn = $('#cancelBtn');
-    this.recourseManager = "";
     this._bind();
 }
 
 ResourceDialog.prototype = {
-    show : function(recourseManager) {
+    show : function(callback,context) {
         this.resources.val('');
         this.wrapper.show();
-        this.recourseManager = recourseManager;
+        this.successCallback = callback;
+        this.callContext = context;
     },
     hide : function() {
         this.wrapper.hide();
+    },
+    _setPosition:function(){
+
     },
     _bind:function() {
         var me = this;
@@ -25,17 +28,9 @@ ResourceDialog.prototype = {
             me.cancel();
         });
     },
-    _convertStr:function(str) {
-        var agentArr = str.split(',');
-        return agentArr.map(function(v) {
-            return v.trim();
-        });
-    },
     save : function() {
         var me = this;
-        $.each(me._convertStr(me.resources.val()), function(index, value) {
-            me.recourseManager.resourcesAdd(value);
-        });
+        me.successCallback.call(me.callContext,me.resources.val());
         me.hide();
     },
     cancel : function() {
@@ -49,6 +44,7 @@ function AgentManager(data, summaryManager, logManager) {
     this.summaryManager = summaryManager;
     this.logManager = logManager;
 }
+
 AgentManager.prototype = {
     init:function() {
         var me = this;
@@ -57,7 +53,7 @@ AgentManager.prototype = {
         });
         this.updateSummary();
     },
-    updateSummary:function(){
+    updateSummary:function() {
         var me = this;
         me.summaryManager.updateBuildingAgentNum(me.getBuildingAgent());
         me.summaryManager.updateIdleAgentNum(me.getIdleAgent());
@@ -106,7 +102,7 @@ ResourceManager.prototype = {
     bind:function() {
         var me = this;
         me.addResourceLink.bind('click', function() {
-            me.dialog.show(me);
+            me.dialog.show(me.resourcesAdd,me);
         });
         me.resourceWrapper.delegate("b", "click", function(e) {
             me.del(e);
@@ -118,9 +114,26 @@ ResourceManager.prototype = {
             me.resourcesAdd(value);
         });
     },
+    _convertStr:function(str) {
+        var agentArr = str.split(',');
+        return agentArr.filter(function(v){
+            return !isNil(v);
+        }).map(function(v){
+            return v.trim();
+        });
+    },
     resourcesAdd : function(resource) {
         var me = this;
-        this.resourceWrapper.append(me.tmplResourceStr.format(resource));
+        if (!resource) {
+            return;
+        }
+        if (resource.indexOf(',') > 0) {
+            $.each(me._convertStr(resource), function(index, value) {
+                me.resourcesAdd(value);
+            });
+        } else {
+            this.resourceWrapper.append(me.tmplResourceStr.format(resource));
+        }
     },
     del : function(e) {
         $(e.target).parent().remove();
@@ -128,7 +141,7 @@ ResourceManager.prototype = {
 };
 
 
-function SummaryManager(agentManager) {
+function SummaryManager() {
     this.buildingNum = $('#buildingNum');
     this.idleNum = $('#idleNum');
 }
@@ -160,23 +173,20 @@ LogManager.prototype = {
 };
 
 
-function Page(data, agentManager, logManager) {
-    this.data = data;
-    this.logManager = logManager;
+function Page(agentManager) {
     this.agentManager = agentManager;
     this.agentList = $('.agents-list');
     this.init();
 }
 Page.prototype = {
     init : function() {
-        var me = this;
-        me.agentManager.init();
+        this.agentManager.init();
     }
 }
 
 var logManager = new LogManager();
 var dialog = new ResourceDialog();
 var summaryManager = new SummaryManager();
-var agentManager = new AgentManager(Config.agents,summaryManager,logManager);
+var agentManager = new AgentManager(Config.agents, summaryManager, logManager);
 
-new Page(Config, agentManager, logManager);
+new Page(agentManager);
