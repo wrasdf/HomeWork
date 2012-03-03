@@ -49,31 +49,31 @@ function isNull(obj) {
 
 function isNil(v) {
 
-    if(isNumber(v)){
+    if (isNumber(v)) {
         return false;
     }
 
     if (isString(v)) {
-        if(v.trim() == ""){
+        if (v.trim() == "") {
             return true;
         }
         return false;
     }
 
-    if(isBoolean(v)){
-        if(v === false){
+    if (isBoolean(v)) {
+        if (v === false) {
             return true;
         }
         return false;
     }
 
-    if(isNull(v)){
+    if (isNull(v)) {
         return true;
     }
 
     if (!v) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
