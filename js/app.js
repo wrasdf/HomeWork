@@ -153,7 +153,7 @@ AgentManager.prototype = {
         me.summaryManager.updateBuildingAgentNum(me.getBuildingAgent());
         me.summaryManager.updateIdleAgentNum(me.getIdleAgent());
     },
-    tmpAgentStr : "<li class='{4}'><dl class='clearfix'>" +
+    tmpAgentStr : "<li class='{4}'><strong>{5}</strong><dl class='clearfix'>" +
         "<dt>{0} | {1} | {2} | {3}</dt>" +
         "<dd>" +
         "<a href='#' class='add'> + Specify Resources</a>" +
@@ -173,7 +173,7 @@ AgentManager.prototype = {
             resource:[]
         }
         $.extend(config, agent);
-        var agentDom = $(me.tmpAgentStr.format(config.description, config.status, config.ip, config.url, config.status));
+        var agentDom = $(me.tmpAgentStr.format(config.description, config.status, config.ip, config.url, config.status, config.status));
         me.agentList.append(agentDom);
         me._addLastClass(agentDom);
         new ResourceManager(agentDom, config.resource, resourceDialog, me.logManager);

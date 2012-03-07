@@ -21,8 +21,9 @@
 .main .agents-wrapper{width:75%;float:left;}
 .main .agents-wrapper span{float:right; margin: 10px 10px 0 0; cursor:pointer;}
 .main .agents-list {clear:both; padding:10px 10px 999999px 10px;margin-bottom: -999989px;}
-.main .agents-list > li { border: 1px #000 solid; padding: 10px 10px 6px; margin-bottom: 10px;}
+.main .agents-list > li { border: 1px #000 solid; padding: 10px 10px 6px; margin-bottom: 10px; position: relative;}
 .main .agents-list > li.last{margin-bottom: 0px;}
+.main .agents-list > li strong{position: absolute; right: 5px; top:5px;}
 .main .agents-list .add {float:left; display: inline-block; padding: 4px 0 2px;}
 
 /*resource*/
@@ -36,16 +37,13 @@
 .main .summary h2{border-bottom: 1px #000 solid; padding-bottom: 4px; margin-bottom: 4px;}
 
 /*dialog*/
-.dialog{width:30%;border: 1px #000 solid; padding: 10px; background: #fff; position: absolute; display: none;}
+.dialog{width:25%;border: 1px #000 solid; padding: 10px; background: #fff; position: absolute; display: none;}
 
 /*add resource*/
-
 .add-agent dl{width:50%; float:left;}
 .add-agent dd{padding:5px 0 0 0px;}
 
-.add-resource dd{
-    padding-top:5px;
-}
+.add-resource dd{padding-top:5px;}
 
 .add-resource ul,.add-agent ul{clear:both; padding-top: 10px;}
 .add-resource ul li,.add-agent ul li {float:left; margin-right: 10px;}
