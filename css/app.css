@@ -1,5 +1,5 @@
 /*wrapper*/
-.wrapper{width:1000px; margin: 0px auto;}
+.wrapper{min-width:1000px;padding:10px;}
 
 /*header*/
 .header{height:30px;}
@@ -11,14 +11,16 @@
 .main .navigation li{float:left; height:20px; padding:4px 8px 0; margin:1px 8px 0 0; border: 1px #000 solid; border-bottom: 0px;}
 .main .navigation li.last{ margin-right: 0px;}
 .main .navigation li.current{ margin-top: 0px; height:21px; position:relative; z-index:1; bottom: -1px; background: #ccc;}
-.main .main-body{clear:both;border: 1px #000 solid;}
+.main .main-body{clear:both;border: 1px #000 solid; overflow: hidden;}
 .main .sub-title{height:40px; border-bottom: 1px #000 solid; background: #ccc;}
 .main .sub-title h3{float:left; line-height: 40px; margin-left: 8px;}
 .main .sub-title ul{float:left; margin-left: 12px;}
 .main .sub-title ul li{float:left; margin:8px 10px 0 0; border: 1px #000 solid; padding: 4px 8px;}
 
 /*agents list*/
-.main .agents-list{width:779px;  float:left; padding: 10px; border-right:1px #000 solid;}
+.main .agents-wrapper{width:75%;float:left;}
+.main .agents-wrapper span{float:right; margin: 10px 10px 0 0; cursor:pointer;}
+.main .agents-list {clear:both; padding:10px 10px 999999px 10px;margin-bottom: -999989px;}
 .main .agents-list > li { border: 1px #000 solid; padding: 10px 10px 6px; margin-bottom: 10px;}
 .main .agents-list > li.last{margin-bottom: 0px;}
 .main .agents-list .add {float:left; display: inline-block; padding: 4px 0 2px;}
@@ -29,10 +31,25 @@
 .main .resource b{ border: 1px #000 solid; display: inline-block; padding: 0px 2px; margin:-1px 5px 0 0; cursor: pointer;}
 
 /*summary*/
-.main .summary{width:188px;float:right; padding: 5px;}
+.main .summary-wrapper{width:25%;float: right;}
+.main .summary{padding: 5px; border-left:1px #000 solid; padding-bottom: 999999px; margin-bottom: -999999px;}
 .main .summary h2{border-bottom: 1px #000 solid; padding-bottom: 4px; margin-bottom: 4px;}
 
+/*dialog*/
+.dialog{width:30%;border: 1px #000 solid; padding: 10px; background: #fff; position: absolute; display: none;}
+
 /*add resource*/
-.add-resource{border: 1px #000 solid; padding: 10px; background: #fff; position: absolute; display: none;}
-.add-resource ul{ margin-top: 10px;}
-.add-resource ul li {float:left; margin-right: 10px;}
+
+.add-agent dl{width:50%; float:left;}
+.add-agent dd{padding:5px 0 0 0px;}
+
+.add-resource dd{
+    padding-top:5px;
+}
+
+.add-resource ul,.add-agent ul{clear:both; padding-top: 10px;}
+.add-resource ul li,.add-agent ul li {float:left; margin-right: 10px;}
+
+/*specification input wrapper*/
+.input-wrapper{margin-right:10px;}
+.input-wrapper-spec{margin-right:20px;}

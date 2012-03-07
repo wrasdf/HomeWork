@@ -5,9 +5,8 @@ function ResourceDialog() {
     this.cancelBtn = $('#cancelBtn');
     this._bind();
 }
-
 ResourceDialog.prototype = {
-    show : function(callback,context) {
+    show : function(callback, context) {
         this.resources.val('');
         this.wrapper.show();
         this.resources.focus();
@@ -17,7 +16,7 @@ ResourceDialog.prototype = {
     hide : function() {
         this.wrapper.hide();
     },
-    setPosition:function(x,y){
+    setPosition:function(x, y) {
         this.wrapper.css({left:x,top:y});
     },
     _bind:function() {
@@ -28,42 +27,126 @@ ResourceDialog.prototype = {
         me.cancelBtn.bind('click', function() {
             me.cancel();
         });
-        $(window).bind('keydown',function(e){
-            var code =  e.keyCode;
-            switch(code){
+        $(window).bind('keydown', function(e) {
+            if (me.wrapper.css('display') == 'none') {
+                return;
+            }
+            var code = e.keyCode;
+            switch (code) {
                 case 13:
                     me.save();
-                break;
+                    break;
                 case 27:
                     me.cancel();
-                break;
+                    break;
             }
         })
     },
     save : function() {
         var me = this;
-        me.successCallback.call(me.callContext,me.resources.val());
-        me.hide();
+        me.successCallback.call(me.callContext, me.resources.val());
+        me.cancel();
     },
     cancel : function() {
         this.hide();
     }
 }
 
-function AgentManager(data, summaryManager, logManager) {
-    this.agentWrapper = $('.agents-list');
+function AgentDialog() {
+    this.wrapper = $('.add-agent');
+    this.agentName = $('#agentName');
+    this.agentIp = $('#agentIp');
+    this.addAgent = $('#addAgent');
+    this.closeAgentDialog = $('#closeAgentDialog');
+    this._bind();
+}
+AgentDialog.prototype = {
+    show : function(callback, context) {
+        this.agentName.val('');
+        this.agentIp.val('');
+        this.wrapper.show();
+        this.agentName.focus();
+        this.successCallback = callback;
+        this.callContext = context;
+    },
+    hide : function() {
+        this.wrapper.hide();
+    },
+    setPosition:function(x, y) {
+        this.wrapper.css({left:x,top:y});
+    },
+    getWrapper:function(){
+        return this.wrapper;
+    },
+    _bind:function() {
+        var me = this;
+        me.addAgent.bind('click', function() {
+            me.save();
+        });
+        me.closeAgentDialog.bind('click', function() {
+            me.cancel();
+        });
+        $(window).bind('keydown', function(e) {
+            if (me.wrapper.css('display') == 'none') {
+                return;
+            }
+            var code = e.keyCode;
+            switch (code) {
+                case 13:
+                    me.save();
+                    break;
+                case 27:
+                    me.cancel();
+                    break;
+            }
+        })
+    },
+    save : function() {
+        var me = this;
+        me.successCallback.call(me.callContext, {
+            ip: me.agentIp.val(),
+            description : me.agentName.val()
+        });
+        me.cancel();
+    },
+    cancel : function() {
+        this.hide();
+    }
+}
+
+
+function AgentManager(data, summaryManager, agentDialog, logManager) {
+    this.agentList = $('.agents-list');
+    this.addAgentSpan = $('.agents-wrapper span');
     this.agents = data;
+    this.agentDialog = agentDialog;
     this.summaryManager = summaryManager;
     this.logManager = logManager;
 }
-
 AgentManager.prototype = {
     init:function() {
+        this._build();
+        this._bind();
+    },
+    _build:function() {
         var me = this;
         $.each(me.agents, function(index, value) {
-            me.add(value);
+            me.agentAdd(value);
         });
-        this.updateSummary();
+    },
+    _position:function(){
+        return {
+            x: this.agentList.offset().left + this.agentList.width() - this.agentDialog.getWrapper().width() -12 ,
+            y: this.addAgentSpan.offset().top + 24
+        }
+    },
+    _bind:function() {
+        var me = this;
+        var position = this._position();
+        this.addAgentSpan.bind('click', function() {
+            me.agentDialog.show(me.agentAdd, me);
+            me.agentDialog.setPosition(position.x, position.y);
+        });
     },
     updateSummary:function() {
         var me = this;
@@ -77,30 +160,44 @@ AgentManager.prototype = {
         "<ul class='resource clearfix'></ul>" +
         "</dd>" +
         "</dl></li>",
-    add : function(agent) {
+    agentAdd : function(agent) {
         var me = this;
-        var agentDom = $(me.tmpAgentStr.format(agent.description, agent.status, agent.ip, agent.url, agent.status));
-        me.agentWrapper.append(agentDom);
+        if(!agent.description && !agent.url){
+            return;
+        }
+        var config = {
+            description : "ThoughtWorks.com.cn",
+            status : 'idle',
+            ip : '192.168.0.1',
+            url : '/agent/',
+            resource:[]
+        }
+        $.extend(config, agent);
+        var agentDom = $(me.tmpAgentStr.format(config.description, config.status, config.ip, config.url, config.status));
+        me.agentList.append(agentDom);
         me._addLastClass(agentDom);
-        new ResourceManager(agentDom, agent.resource, dialog, me.logManager);
-        me.logManager.add("Agent " + agent.ip + ' add');
+        new ResourceManager(agentDom, config.resource, resourceDialog, me.logManager);
+        me.updateSummary();
+        me.logManager.agentAdd("Agent " + config.ip + 'agentAddd');
     },
     getBuildingAgent:function() {
-        return this.agentWrapper.find('li.building').length;
+        return this.agentList.find('li.building').length;
     },
     getIdleAgent:function() {
-        return this.agentWrapper.find('li.idle').length;
+        return this.agentList.find('li.idle').length;
     },
     _addLastClass:function(dom) {
-        this.agentWrapper.find('li').removeClass('last');
+        this.agentList.find('li').removeClass('last');
         dom.addClass("last");
     }
+
 };
 
-function ResourceManager(dom, resources, dialog, logManager) {
+
+function ResourceManager(dom, resources, resourceDialog, logManager) {
     this.resourceWrapper = dom.find('ul.resource');
     this.addResourceLink = dom.find('a.add');
-    this.dialog = dialog;
+    this.resourceDialog = resourceDialog;
     this.resources = resources;
     this.logManager = logManager;
     this.init();
@@ -111,8 +208,8 @@ ResourceManager.prototype = {
         this.build();
         this.bind();
     },
-    _getWrapperPosition:function(){
-        var pos =  this.addResourceLink.offset();
+    _getWrapperPosition:function() {
+        var pos = this.addResourceLink.offset();
         return {
             x : pos.left - 11,
             y : pos.top + this.addResourceLink.outerHeight() + 5
@@ -123,8 +220,8 @@ ResourceManager.prototype = {
         me.addResourceLink.bind('click', function(e) {
             e.preventDefault();
             var position = me._getWrapperPosition();
-            me.dialog.show(me.resourcesAdd,me);
-            me.dialog.setPosition(position.x,position.y);
+            me.resourceDialog.show(me.resourcesAdd, me);
+            me.resourceDialog.setPosition(position.x, position.y);
         });
         me.resourceWrapper.delegate("b", "click", function(e) {
             me.del(e);
@@ -138,11 +235,12 @@ ResourceManager.prototype = {
     },
     _convertStr:function(str) {
         var agentArr = str.split(',');
-        return agentArr.filter(function(v){
-            return !isNil(v);
-        }).map(function(v){
-            return v.trim();
-        });
+        return agentArr.filter(
+            function(v) {
+                return !isNil(v);
+            }).map(function(v) {
+                return v.trim();
+            });
     },
     resourcesAdd : function(resource) {
         var me = this;
@@ -167,7 +265,6 @@ function SummaryManager() {
     this.buildingNum = $('#buildingNum');
     this.idleNum = $('#idleNum');
 }
-
 SummaryManager.prototype = {
     updateBuildingAgentNum : function(num) {
         this.buildingNum.html(num);
@@ -185,7 +282,7 @@ LogManager.prototype = {
     tmp:function() {
         return "<li>{0}</li>"
     },
-    add : function(str) {
+    agentAdd : function(str) {
         var me = this;
         this.logWrapper.append(me.tmp().format(str));
     },
@@ -197,7 +294,6 @@ LogManager.prototype = {
 
 function Page(agentManager) {
     this.agentManager = agentManager;
-    this.agentList = $('.agents-list');
     this.init();
 }
 Page.prototype = {
@@ -206,9 +302,13 @@ Page.prototype = {
     }
 }
 
-var logManager = new LogManager();
-var dialog = new ResourceDialog();
-var summaryManager = new SummaryManager();
-var agentManager = new AgentManager(Config.agents, summaryManager, logManager);
 
-new Page(agentManager);
+var logManager = new LogManager();
+var resourceDialog = new ResourceDialog();
+var agentDialog = new AgentDialog();
+var summaryManager = new SummaryManager();
+var agentManager = new AgentManager(Config.agents, summaryManager, agentDialog, logManager);
+
+$(function() {
+    new Page(agentManager);
+});

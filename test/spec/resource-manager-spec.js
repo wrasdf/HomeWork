@@ -4,7 +4,7 @@ describe('Resource Manager', function () {
         hide:function(){}
     };
     var logManager = {
-        add:function(){}
+        agentAdd:function(){}
     };
     var dom,resourceManager;
 

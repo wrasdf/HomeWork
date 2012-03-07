@@ -14,9 +14,9 @@ h4 {font-size: 14px;}
 h5 {font-size: 12px;}
 h6 {font-size: 11px;}
 
-input{color:#404041; font-size:12px;};
+input{color:#404041; font-size:12px;}
 input[type="button"]{overflow: visible;}
-input[type="text"]{padding:2px 4px; margin: 0px; height:22px; line-height: 19px; border:1px #aaa solid;width:90%}
+input[type="text"]{padding:2px 4px; margin: 0px; height:22px; line-height: 19px; border:1px #aaa solid;width:100%;}
 
 form label {font-style: italic;cursor:default;}
 
@@ -33,5 +33,4 @@ a:hover {color:#EB8C00;}
 }
 .clearfix:after {clear: both;}
 .clearfix {zoom: 1;} /* IE < 8 */
-.clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}

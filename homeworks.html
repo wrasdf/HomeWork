@@ -21,6 +21,7 @@
             <li class="last">Help</li>
         </ul>
         <div class="main-body clearfix">
+
             <div class="sub-title">
                 <h3>Agent</h3>
                 <ul>
@@ -29,32 +30,53 @@
                     <li>Virtual</li>
                 </ul>
             </div>
-            <div class="summary">
-                <h2>summary</h2>
-                <dl>
-                    <dt>Building :</dt>
-                    <dd id="buildingNum">5</dd>
-                </dl>
-                <dl>
-                    <dt>Idle :</dt>
-                    <dd id="idleNum">8</dd>
-                </dl>
-                <h2>Logs</h2>
-                <ul class="logs">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+
+            <div class="summary-wrapper">
+                <div class="summary">
+                    <h2>summary</h2>
+                    <dl>
+                        <dt>Building :</dt>
+                        <dd id="buildingNum">5</dd>
+                    </dl>
+                    <dl>
+                        <dt>Idle :</dt>
+                        <dd id="idleNum">8</dd>
+                    </dl>
+                    <h2>Logs</h2>
+                    <ul class="logs"></ul>
+                </div>
             </div>
-            <ul class="agents-list"></ul>
+
+            <div class="agents-wrapper">
+                <span>+ Add Agent</span>
+                <ul class="agents-list"></ul>
+            </div>
+
         </div>
     </div>
     <div class="footer"></div>
-    <div class="add-resource">
-        <input type="text" value="" id="resourceValue" />
+    <div class="add-resource dialog">
+        <dl>
+            <dt>Add Resource</dt>
+            <dd><div class="input-wrapper"><input type="text" value="" id="resourceValue"/></div></dd>
+        </dl>
         <ul>
-            <li><input type="button" value="save" id="saveBtn" /></li>
-            <li><input type="button" value="cancel" id="cancelBtn" /></li>
+            <li><input type="button" value="save" id="saveBtn"/></li>
+            <li><input type="button" value="cancel" id="cancelBtn"/></li>
+        </ul>
+    </div>
+    <div class="add-agent dialog">
+        <dl>
+            <dt>Name</dt>
+            <dd><div class="input-wrapper-spec"><input type="text" value="" id="agentName"/></div></dd>
+        </dl>
+        <dl>
+            <dt>Ip</dt>
+            <dd><div class="input-wrapper"><input type="text" value="" id="agentIp"/></div></dd>
+        </dl>
+        <ul>
+            <li><input type="button" value="Add Agent" id="addAgent"/></li>
+            <li><input type="button" value="Close" id="closeAgentDialog"/></li>
         </ul>
     </div>
 </div>
