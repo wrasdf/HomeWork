@@ -312,3 +312,6 @@ var agentManager = new AgentManager(Config.agents, summaryManager, agentDialog, 
 $(function() {
     new Page(agentManager);
 });
+
+$(window).bind("load",function(){})
+
